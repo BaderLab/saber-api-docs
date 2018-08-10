@@ -316,10 +316,10 @@
 <p>This endpoint annotates raw text.</p>
 <h3 id='http-request'>HTTP Request</h3>
 <p><code>POST http://localhost:5000/annotate/text</code></p>
-
+<h3 id='query-parameters'>Query Parameters</h3>
 <table><thead>
 <tr>
-<th>Parameter</th>
+<th>Param</th>
 <th>Type</th>
 <th>Default</th>
 <th>Description</th>
@@ -329,11 +329,11 @@
 <td><code>text</code></td>
 <td>String</td>
 <td>None (required)</td>
-<td>Raw text to annotate for biomedical concepts.</td>
+<td>Raw text to annotate.</td>
 </tr>
 <tr>
 <td><code>ents</code></td>
-<td>Object: <code>&quot;ents&quot;: {&quot;&lt;ENTITY&gt;: true/false, ...}</code></td>
+<td>Object: <code>&quot;ents&quot;: {&quot;&lt;ENT&gt;&quot;: true/false, ...}</code></td>
 <td>If omitted, all entities are <code>true</code>. If some entities are present, all others are <code>false</code>.</td>
 <td>Which biomedical entities to annotate.</td>
 </tr>
@@ -360,7 +360,7 @@ For example, to annotate some given <code>text</code> for the entity class <code
       </span><span class="s2">"text"</span><span class="p">:</span><span class="w"> </span><span class="s2">"p53"</span><span class="w">
     </span><span class="p">},</span><span class="w">
     </span><span class="p">{</span><span class="w">
-      </span><span class="s2">"..."</span><span class="w">
+      </span><span class="err">...</span><span class="w">
     </span><span class="p">}</span><span class="w">
   </span><span class="p">],</span><span class="w">
   </span><span class="s2">"text"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Since most cancers are associated with alterations of the p53 and Rb pathways ..."</span><span class="w">
@@ -369,10 +369,10 @@ For example, to annotate some given <code>text</code> for the entity class <code
 <p>This endpoint annotates a PubMed article, given its PubMed identifier (<a href="https://en.wikipedia.org/wiki/PubMed#PubMed_identifier"><strong>PMID</strong></a>).</p>
 <h3 id='http-request-2'>HTTP Request</h3>
 <p><code>POST http://localhost:5000/annotate/pmid</code></p>
-<h3 id='query-parameters'>Query Parameters</h3>
+<h3 id='query-parameters-2'>Query Parameters</h3>
 <table><thead>
 <tr>
-<th>Parameter</th>
+<th>Param</th>
 <th>Type</th>
 <th>Default</th>
 <th>Description</th>
@@ -382,11 +382,11 @@ For example, to annotate some given <code>text</code> for the entity class <code
 <td><code>pmid</code></td>
 <td>Integer</td>
 <td>None (required)</td>
-<td>PubMed Identifier (PMID) of article to annotate.</td>
+<td><a href="https://en.wikipedia.org/wiki/PubMed#PubMed_identifier">PMID</a> of article to annotate.</td>
 </tr>
 <tr>
 <td><code>ents</code></td>
-<td>Object: <code>&quot;ents&quot;: {&quot;&lt;ENTITY&gt;: true/false, ...}</code></td>
+<td>Object: <code>&quot;ents&quot;: {&quot;&lt;ENT&gt;&quot;: true/false, ...}</code></td>
 <td>If omitted, all entities are <code>true</code>. If some entities are present, all others are <code>false</code>.</td>
 <td>Which biomedical entities to annotate.</td>
 </tr>
