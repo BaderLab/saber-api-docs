@@ -8,18 +8,38 @@ language_tabs: # must be one of https://git.io/vQNgJ
   - javascript
 
 toc_footers:
-  - <a href='#'>Sign Up for a Developer Key</a>
+#  - <a href='#'>Sign Up for a Developer Key</a>
   - <a href='https://github.com/lord/slate'>Documentation Powered by Slate</a>
 
 includes:
-  - errors
+#  - errors
 
 search: true
 ---
 
 # Introduction
 
-Welcome to the Saber API! You can use our API to annotate text for **biomedical named entities** and **trigger words**.
+Welcome to the Saber API! You can use our API to annotate text for **biomedical concepts** and **entities**.
+
+Each recognized instance of a concept in text is called an **entity**. Given the inherent ambiguity of natural language and the fuzzy boundaries between concepts and entity classes, some entities will be tagged with _multiple_ concepts, sometimes from different concept groups.
+
+Parameters should be provided in a JSON encoded `POST` payload. All API calls accept an optional parameter named `ents`, specifying the types of entities you want to annotate. It is an object where keys are case-sensitive semantic group identifiers and values are booleans. By default (and if omitted), entities from all groups are annotated:
+
+`{ "ents": { "CHED": true, "DISO": true, "LIVB": true, "PRGE": true, ... } }`
+
+
+If you specify an `ents` object, any omitted entity class will be assumed to be `false`. For example, if you were only interested in tagging disorders (`DISO`) and genes/proteins (`PRGE`), you could pass the following `ents` object:
+
+`{  "groups": { "DISO": true, "PRGE": true } }`
+
+The following table lists all supported semantic groups, their corresponding identifiers and the types of identified entities.
+
+Identifier | Semantic Group | Identified entity types
+---------- | -------------- | -----------------------
+`CHED` | Chemicals | Abbreviations and Acronyms, Molecular Formulas, Chemical database identifiers, IUPAC names, Trivial (common names of chemicals and trademark names), Family (chemical families with a defined structure) and Multiple (non-continuous mentions of chemicals in text)
+`DISO` | Disorders | Acquired Abnormality, Anatomical Abnormality, Cell or Molecular Dysfunction, Congenital Abnormality, Disease or Syndrome, Mental or Behavioral Dysfunction, Neoplastic Process, Pathologic Function, Sign or Symptom
+`LIVB` | Organisms | Species, Taxa
+`PRGE` | Genes and Gene Products | Genes, Gene Products
 
 We have language bindings in Shell, Ruby, Python, and JavaScript! You can view code examples in the dark area to the right, and you can switch the programming language of the examples with the tabs in the top right.
 
@@ -28,51 +48,40 @@ We have language bindings in Shell, Ruby, Python, and JavaScript! You can view c
 ## Annotate Raw Text
 
 ```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.get
+TODO
 ```
 
 ```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-api.kittens.get()
+TODO
 ```
 
 ```shell
-curl -XPOST \
-  --data '{"text": "The phosphorylation of Hdm2 by MK2 promotes the ubiquitination of p53."}' \
-  'http://localhost:5000/annotate/text'
+curl -X POST 'http://localhost:5000/annotate/text' \
+--data '{"text": "The phosphorylation of Hdm2 by MK2 promotes the ubiquitination of p53."}'
+
 ```
 
 ```javascript
-const kittn = require('kittn');
-
-let api = kittn.authorize('meowmeowmeow');
-let kittens = api.kittens.get();
+TODO
 ```
 
 > The above command returns JSON structured like this:
 
 ```json
-[
-  {
-    "id": 1,
-    "name": "Fluffums",
-    "breed": "calico",
-    "fluffiness": 6,
-    "cuteness": 7
-  },
-  {
-    "id": 2,
-    "name": "Max",
-    "breed": "unknown",
-    "fluffiness": 5,
-    "cuteness": 10
-  }
-]
+{
+  "ents": [
+    {
+      "start": 23,
+      "end": 27,
+      "label": "PRGE",
+      "text": "Hdm2"
+    },
+    {
+      "..."
+    }
+  ],
+  "text": "The phosphorylation of Hdm2 by MK2 promotes the ubiquitination of p53."
+}
 ```
 
 This endpoint annotates raw text.
@@ -81,52 +90,54 @@ This endpoint annotates raw text.
 
 `POST http://localhost:5000/annotate/text`
 
-Parameter | Default | Description
---------- | ------- | -----------
-text | None (required) | Raw text to annotate for biomedical concepts and entities.
-ents | If omitted, all entities are `True`. If some entities are present, all others are `False` | Which biomedical concepts and entities should be annotated.
+Parameter | Type | Default | Description
+--------- | ---- | ------- | -----------
+`text` | String | None (required) | Raw text to annotate for biomedical concepts.
+`ents` | Object: `"ents": {"<ENTITY>: true/false, ...}` | If omitted, all entities are `true`. If some entities are present, all others are `false`. | Which biomedical entities to annotate. |  
+
+<aside class="notice">
+For example, to annotate some given <code>text</code> for the entity class <code>PRGE</code>, you would provide <code>"ents": {"PRGE": true}</code> in your JSON payload.
+</aside>
 
 ## PubMed Articles
 
 ```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.get(2)
+TODO
 ```
 
 ```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-api.kittens.get(2)
+TODO
 ```
 
 ```shell
-curl "http://example.com/api/kittens/2"
-  -H "Authorization: meowmeowmeow"
+curl -X POST 'http://localhost:5000/annotate/pmid' \                                                                                                                 
+--data '{"pmid": 29970521}'
 ```
 
 ```javascript
-const kittn = require('kittn');
-
-let api = kittn.authorize('meowmeowmeow');
-let max = api.kittens.get(2);
+TODO
 ```
 
 > The above command returns JSON structured like this:
 
 ```json
 {
-  "id": 2,
-  "name": "Max",
-  "breed": "unknown",
-  "fluffiness": 5,
-  "cuteness": 10
+  "ents": [
+    {
+      "start": 14,
+      "end": 16,
+      "label": "PRGE",
+      "text": "p53"
+    },
+    {
+      "..."
+    }
+  ],
+  "text": "Since most cancers are associated with alterations of the p53 and Rb pathways ..."
 }
 ```
 
-This endpoint annotates a PubMed article, given its PubMed ID (PMID).
+This endpoint annotates a PubMed article, given its PubMed identifier ([**PMID**](https://en.wikipedia.org/wiki/PubMed#PubMed_identifier)).
 
 ### HTTP Request
 
@@ -136,59 +147,5 @@ This endpoint annotates a PubMed article, given its PubMed ID (PMID).
 
 Parameter | Type | Default | Description
 --------- | ------- | -------| -----------
-pmid | integer | None (required) | PubMed ID of article to annotate.
-ents | object: {"ENT": true/false, ...} | If omitted, all entities are `true`. If some entities are present, all others are `false`. | Which biomedical entities to annotate. |  
-
-<aside class="success">
-Remember — a happy kitten is an authenticated kitten!
-</aside>
-
-## Delete a Specific Kitten
-
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.delete(2)
-```
-
-```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-api.kittens.delete(2)
-```
-
-```shell
-curl "http://example.com/api/kittens/2"
-  -X DELETE
-  -H "Authorization: meowmeowmeow"
-```
-
-```javascript
-const kittn = require('kittn');
-
-let api = kittn.authorize('meowmeowmeow');
-let max = api.kittens.delete(2);
-```
-
-> The above command returns JSON structured like this:
-
-```json
-{
-  "id": 2,
-  "deleted" : ":("
-}
-```
-
-This endpoint deletes a specific kitten.
-
-### HTTP Request
-
-`DELETE http://example.com/kittens/<ID>`
-
-### URL Parameters
-
-Parameter | Description
---------- | -----------
-ID | The ID of the kitten to delete
+`pmid` | Integer | None (required) | PubMed Identifier (PMID) of article to annotate.
+`ents` | Object: `"ents": {"<ENTITY>: true/false, ...}` | If omitted, all entities are `true`. If some entities are present, all others are `false`. | Which biomedical entities to annotate. |  
