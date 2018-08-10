@@ -90,10 +90,12 @@ This endpoint annotates raw text.
 
 `POST http://localhost:5000/annotate/text`
 
-Parameter | Type | Default | Description
---------- | ---- | ------- | -----------
-`text` | String | None (required) | Raw text to annotate for biomedical concepts.
-`ents` | Object: `"ents": {"<ENTITY>: true/false, ...}` | If omitted, all entities are `true`. If some entities are present, all others are `false`. | Which biomedical entities to annotate. |  
+### Query Parameters
+
+Param | Type | Default | Description
+----- | ---- | ------- | -----------
+`text` | String | None (required) | Raw text to annotate.
+`ents` | Object: `"ents": {"<ENT>": true/false, ...}` | If omitted, all entities are `true`. If some entities are present, all others are `false`. | Which biomedical entities to annotate.
 
 <aside class="notice">
 For example, to annotate some given <code>text</code> for the entity class <code>PRGE</code>, you would provide <code>"ents": {"PRGE": true}</code> in your JSON payload.
@@ -130,7 +132,7 @@ TODO
       "text": "p53"
     },
     {
-      "..."
+      ...
     }
   ],
   "text": "Since most cancers are associated with alterations of the p53 and Rb pathways ..."
@@ -145,7 +147,7 @@ This endpoint annotates a PubMed article, given its PubMed identifier ([**PMID**
 
 ### Query Parameters
 
-Parameter | Type | Default | Description
---------- | ------- | -------| -----------
-`pmid` | Integer | None (required) | PubMed Identifier (PMID) of article to annotate.
-`ents` | Object: `"ents": {"<ENTITY>: true/false, ...}` | If omitted, all entities are `true`. If some entities are present, all others are `false`. | Which biomedical entities to annotate. |  
+Param | Type | Default | Description
+----- | ---- | ------- | -----------
+`pmid` | Integer | None (required) | [PMID](https://en.wikipedia.org/wiki/PubMed#PubMed_identifier) of article to annotate.
+`ents` | Object: `"ents": {"<ENT>": true/false, ...}` | If omitted, all entities are `true`. If some entities are present, all others are `false`. | Which biomedical entities to annotate.
