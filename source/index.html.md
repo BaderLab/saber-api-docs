@@ -1,5 +1,5 @@
 ---
-title: API Reference
+title: Saber - API Reference
 
 language_tabs: # must be one of https://git.io/vQNgJ
   - shell
@@ -19,55 +19,13 @@ search: true
 
 # Introduction
 
-Welcome to the Kittn API! You can use our API to access Kittn API endpoints, which can get information on various cats, kittens, and breeds in our database.
+Welcome to the Saber API! You can use our API to annotate text for **biomedical named entities** and **trigger words**.
 
 We have language bindings in Shell, Ruby, Python, and JavaScript! You can view code examples in the dark area to the right, and you can switch the programming language of the examples with the tabs in the top right.
 
-This example API documentation page was created with [Slate](https://github.com/lord/slate). Feel free to edit it and use it as a base for your own API's documentation.
+# Annotate
 
-# Authentication
-
-> To authorize, use this code:
-
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-```
-
-```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-```
-
-```shell
-# With shell, you can just pass the correct header with each request
-curl "api_endpoint_here"
-  -H "Authorization: meowmeowmeow"
-```
-
-```javascript
-const kittn = require('kittn');
-
-let api = kittn.authorize('meowmeowmeow');
-```
-
-> Make sure to replace `meowmeowmeow` with your API key.
-
-Kittn uses API keys to allow access to the API. You can register a new Kittn API key at our [developer portal](http://example.com/developers).
-
-Kittn expects for the API key to be included in all API requests to the server in a header that looks like the following:
-
-`Authorization: meowmeowmeow`
-
-<aside class="notice">
-You must replace <code>meowmeowmeow</code> with your personal API key.
-</aside>
-
-# Kittens
-
-## Get All Kittens
+## Annotate Raw Text
 
 ```ruby
 require 'kittn'
@@ -84,8 +42,9 @@ api.kittens.get()
 ```
 
 ```shell
-curl "http://example.com/api/kittens"
-  -H "Authorization: meowmeowmeow"
+curl -XPOST \
+  --data '{"text": "The phosphorylation of Hdm2 by MK2 promotes the ubiquitination of p53."}' \
+  'http://localhost:5000/annotate/text'
 ```
 
 ```javascript
@@ -116,24 +75,18 @@ let kittens = api.kittens.get();
 ]
 ```
 
-This endpoint retrieves all kittens.
+This endpoint annotates raw text.
 
 ### HTTP Request
 
-`GET http://example.com/api/kittens`
-
-### Query Parameters
+`POST http://localhost:5000/annotate/text`
 
 Parameter | Default | Description
 --------- | ------- | -----------
-include_cats | false | If set to true, the result will also include cats.
-available | true | If set to false, the result will include kittens that have already been adopted.
+text | None (required) | Raw text to annotate for biomedical concepts and entities.
+ents | If omitted, all entities are `True`. If some entities are present, all others are `False` | Which biomedical concepts and entities should be annotated.
 
-<aside class="success">
-Remember — a happy kitten is an authenticated kitten!
-</aside>
-
-## Get a Specific Kitten
+## PubMed Articles
 
 ```ruby
 require 'kittn'
@@ -173,19 +126,22 @@ let max = api.kittens.get(2);
 }
 ```
 
-This endpoint retrieves a specific kitten.
-
-<aside class="warning">Inside HTML code blocks like this one, you can't use Markdown, so use <code>&lt;code&gt;</code> blocks to denote code.</aside>
+This endpoint annotates a PubMed article, given its PubMed ID (PMID).
 
 ### HTTP Request
 
-`GET http://example.com/kittens/<ID>`
+`POST http://localhost:5000/annotate/pmid`
 
-### URL Parameters
+### Query Parameters
 
-Parameter | Description
---------- | -----------
-ID | The ID of the kitten to retrieve
+Parameter | Type | Default | Description
+--------- | ------- | -------| -----------
+pmid | integer | None (required) | PubMed ID of article to annotate.
+ents | object: {"ENT": true/false, ...} | If omitted, all entities are `true`. If some entities are present, all others are `false`. | Which biomedical entities to annotate. |  
+
+<aside class="success">
+Remember — a happy kitten is an authenticated kitten!
+</aside>
 
 ## Delete a Specific Kitten
 
@@ -236,4 +192,3 @@ This endpoint deletes a specific kitten.
 Parameter | Description
 --------- | -----------
 ID | The ID of the kitten to delete
-
