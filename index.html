@@ -250,11 +250,11 @@
 
 <p>Parameters should be provided in a JSON encoded <code>POST</code> payload. All API calls accept an optional parameter named <code>ents</code>, specifying the types of entities you want to annotate. It is an object where keys are case-sensitive semantic group identifiers and values are booleans. By default (and if omitted), entities from all groups are annotated:</p>
 
-<p><code>{ &quot;ents&quot;: { &quot;CHED&quot;: true, &quot;DISO&quot;: true, &quot;LIVB&quot;: true, &quot;PRGE&quot;: true, ... } }</code></p>
+<p><code>&quot;ents&quot;: { &quot;CHED&quot;: true, &quot;DISO&quot;: true, &quot;LIVB&quot;: true, &quot;PRGE&quot;: true, ... }</code></p>
 
-<p>If you specify an <code>ents</code> object, any omitted entity class will be assumed to be <code>false</code>. For example, if you were only interested in tagging disorders (<code>DISO</code>) and genes/proteins (<code>PRGE</code>), you could pass the following <code>ents</code> object:</p>
+<p>If you do specify an <code>ents</code> object, any omitted entity class will be assumed to be <code>false</code>. For example, if you were only interested in tagging disorders (<code>DISO</code>) and genes/proteins (<code>PRGE</code>):</p>
 
-<p><code>{  &quot;groups&quot;: { &quot;DISO&quot;: true, &quot;PRGE&quot;: true } }</code></p>
+<p><code>&quot;ents&quot;: { &quot;DISO&quot;: true, &quot;PRGE&quot;: true }</code></p>
 
 <p>The following table lists all supported semantic groups, their corresponding identifiers and the types of identified entities.</p>
 
@@ -360,7 +360,7 @@ For example, to annotate some given <code>text</code> for the entity class <code
       </span><span class="s2">"text"</span><span class="p">:</span><span class="w"> </span><span class="s2">"p53"</span><span class="w">
     </span><span class="p">},</span><span class="w">
     </span><span class="p">{</span><span class="w">
-      </span><span class="err">...</span><span class="w">
+      </span><span class="s2">"..."</span><span class="w">
     </span><span class="p">}</span><span class="w">
   </span><span class="p">],</span><span class="w">
   </span><span class="s2">"text"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Since most cancers are associated with alterations of the p53 and Rb pathways ..."</span><span class="w">
