@@ -25,12 +25,11 @@ Each recognized instance of a concept in text is called an **entity**. Given the
 
 Parameters should be provided in a JSON encoded `POST` payload. All API calls accept an optional parameter named `ents`, specifying the types of entities you want to annotate. It is an object where keys are case-sensitive semantic group identifiers and values are booleans. By default (and if omitted), entities from all groups are annotated:
 
-`{ "ents": { "CHED": true, "DISO": true, "LIVB": true, "PRGE": true, ... } }`
+`"ents": { "CHED": true, "DISO": true, "LIVB": true, "PRGE": true, ... }`
 
+If you do specify an `ents` object, any omitted entity class will be assumed to be `false`. For example, if you were only interested in tagging disorders (`DISO`) and genes/proteins (`PRGE`):
 
-If you specify an `ents` object, any omitted entity class will be assumed to be `false`. For example, if you were only interested in tagging disorders (`DISO`) and genes/proteins (`PRGE`), you could pass the following `ents` object:
-
-`{  "groups": { "DISO": true, "PRGE": true } }`
+`"ents": { "DISO": true, "PRGE": true }`
 
 The following table lists all supported semantic groups, their corresponding identifiers and the types of identified entities.
 
@@ -132,7 +131,7 @@ TODO
       "text": "p53"
     },
     {
-      ...
+      "..."
     }
   ],
   "text": "Since most cancers are associated with alterations of the p53 and Rb pathways ..."
