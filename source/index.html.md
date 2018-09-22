@@ -95,7 +95,7 @@ Param | Type | Default | Description
 ----- | ---- | ------- | -----------
 `text` | String | None (required) | Raw text to annotate.
 `ents` | Object: `"ents": {"<ENT>": true/false, ...}` | If omitted, all entities are `true`. If some entities are present, all others are `false`. | Which biomedical entities to annotate.
-`coref` | boolean: `true`/`false` | `false` | `True` if coreference resolution should be performed before annotating the text.
+`coref` | Boolean: `true`/`false` | `false` | `true` if coreference resolution should be performed before annotating the text.
 
 <aside class="notice">
 For example, to annotate some given <code>text</code> for the entity class <code>PRGE</code>, you would provide <code>"ents": {"PRGE": true}</code> in your JSON payload.
@@ -151,4 +151,4 @@ Param | Type | Default | Description
 ----- | ---- | ------- | -----------
 `pmid` | Integer | None (required) | [PMID](https://en.wikipedia.org/wiki/PubMed#PubMed_identifier) of article to annotate.
 `ents` | Object: `"ents": {"<ENT>": true/false, ...}` | If omitted, all entities are `true`. If some entities are present, all others are `false`. | Which biomedical entities to annotate.
-`coref` | boolean: `true`/`false` | `false` | `True` if coreference resolution should be performed before annotating the text.
+`coref` | Boolean: `true`/`false` | `false` | `true` if coreference resolution should be performed before annotating the text.
