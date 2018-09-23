@@ -51,7 +51,14 @@ TODO
 ```
 
 ```python
-TODO
+import requests # assuming you have requests package installed!
+
+url = "http://localhost:5000/annotate/pmid"
+payload = {"text": "The phosphorylation of Hdm2 by MK2 promotes the ubiquitination of p53."}
+response = requests.post(url, json=payload)
+
+print(response.text)
+print(response.status_code, response.reason)
 ```
 
 ```shell
@@ -108,11 +115,18 @@ TODO
 ```
 
 ```python
-TODO
+import requests # assuming you have requests package installed!
+
+url = "http://localhost:5000/annotate/pmid"
+payload = {"pmid": 29970521}
+response = requests.post(url, json=payload)
+
+print(response.text)
+print(response.status_code, response.reason)
 ```
 
 ```shell
-curl -X POST 'http://localhost:5000/annotate/pmid' \                                                                                                                 
+curl -X POST 'http://localhost:5000/annotate/pmid' \
 --data '{"pmid": 29970521}'
 ```
 
