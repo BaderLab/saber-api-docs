@@ -289,7 +289,14 @@
 
 <p>We have language bindings in Shell, Ruby, Python, and JavaScript! You can view code examples in the dark area to the right, and you can switch the programming language of the examples with the tabs in the top right.</p>
 <h1 id='annotate'>Annotate</h1><h2 id='annotate-raw-text'>Annotate Raw Text</h2><pre class="highlight ruby tab-ruby"><code><span class="no">TODO</span>
-</code></pre><pre class="highlight python tab-python"><code><span class="n">TODO</span>
+</code></pre><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">requests</span> <span class="c"># assuming you have requests package installed!</span>
+
+<span class="n">url</span> <span class="o">=</span> <span class="s">"http://localhost:5000/annotate/pmid"</span>
+<span class="n">payload</span> <span class="o">=</span> <span class="p">{</span><span class="s">"text"</span><span class="p">:</span> <span class="s">"The phosphorylation of Hdm2 by MK2 promotes the ubiquitination of p53."</span><span class="p">}</span>
+<span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="n">payload</span><span class="p">)</span>
+
+<span class="k">print</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">status_code</span><span class="p">,</span> <span class="n">response</span><span class="o">.</span><span class="n">reason</span><span class="p">)</span>
 </code></pre><pre class="highlight shell tab-shell"><code>curl -X POST <span class="s1">'http://localhost:5000/annotate/text'</span> <span class="se">\</span>
 --data <span class="s1">'{"text": "The phosphorylation of Hdm2 by MK2 promotes the ubiquitination of p53."}'</span>
 
@@ -349,8 +356,15 @@
 For example, to annotate some given <code>text</code> for the entity class <code>PRGE</code>, you would provide <code>"ents": {"PRGE": true}</code> in your JSON payload.
 </aside>
 <h2 id='pubmed-articles'>PubMed Articles</h2><pre class="highlight ruby tab-ruby"><code><span class="no">TODO</span>
-</code></pre><pre class="highlight python tab-python"><code><span class="n">TODO</span>
-</code></pre><pre class="highlight shell tab-shell"><code>curl -X POST <span class="s1">'http://localhost:5000/annotate/pmid'</span> <span class="se">\ </span>                                                                                                                
+</code></pre><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">requests</span> <span class="c"># assuming you have requests package installed!</span>
+
+<span class="n">url</span> <span class="o">=</span> <span class="s">"http://localhost:5000/annotate/pmid"</span>
+<span class="n">payload</span> <span class="o">=</span> <span class="p">{</span><span class="s">"pmid"</span><span class="p">:</span> <span class="mi">29970521</span><span class="p">}</span>
+<span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="n">payload</span><span class="p">)</span>
+
+<span class="k">print</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">status_code</span><span class="p">,</span> <span class="n">response</span><span class="o">.</span><span class="n">reason</span><span class="p">)</span>
+</code></pre><pre class="highlight shell tab-shell"><code>curl -X POST <span class="s1">'http://localhost:5000/annotate/pmid'</span> <span class="se">\</span>
 --data <span class="s1">'{"pmid": 29970521}'</span>
 </code></pre><pre class="highlight javascript tab-javascript"><code><span class="nx">TODO</span>
 </code></pre>
