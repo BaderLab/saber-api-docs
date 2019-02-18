@@ -31,14 +31,14 @@ If you do specify an `ents` object, any omitted entity class will be assumed to 
 
 `"ents": { "DISO": true, "PRGE": true }`
 
-The following table lists all supported semantic groups, their corresponding identifiers and the types of identified entities.
+The following table lists all supported semantic groups, their corresponding identifiers, the types of identified entities and the namespace the entities will be grounded to.
 
-Identifier | Semantic Group | Identified entity types
----------- | -------------- | -----------------------
-`CHED` | Chemicals | Abbreviations and Acronyms, Molecular Formulas, Chemical database identifiers, IUPAC names, Trivial (common names of chemicals and trademark names), Family (chemical families with a defined structure) and Multiple (non-continuous mentions of chemicals in text)
-`DISO` | Disorders | Acquired Abnormality, Anatomical Abnormality, Cell or Molecular Dysfunction, Congenital Abnormality, Disease or Syndrome, Mental or Behavioral Dysfunction, Neoplastic Process, Pathologic Function, Sign or Symptom
-`LIVB` | Organisms | Species, Taxa
-`PRGE` | Genes and Gene Products | Genes, Gene Products
+Identifier | Semantic Group | Identified entity types | Namespace |
+---------- | -------------- | ----------------------- | --------- |
+`CHED` | Chemicals | Abbreviations and Acronyms, Molecular Formulas, Chemical database identifiers, IUPAC names, Trivial (common names of chemicals and trademark names), Family (chemical families with a defined structure) and Multiple (non-continuous mentions of chemicals in text) | [PubChem Compounds](https://pubchem.ncbi.nlm.nih.gov/)
+`DISO` | Disorders | Acquired Abnormality, Anatomical Abnormality, Cell or Molecular Dysfunction, Congenital Abnormality, Disease or Syndrome, Mental or Behavioral Dysfunction, Neoplastic Process, Pathologic Function, Sign or Symptom | [Disease Ontology](http://disease-ontology.org/)
+`LIVB` | Organisms | Species, Taxa | [NCBI Taxonomy](https://www.ncbi.nlm.nih.gov/taxonomy)
+`PRGE` | Genes and Gene Products | Genes, Gene Products | [STRING](https://string-db.org/)
 
 We have language bindings in Shell, Ruby, Python, and JavaScript! You can view code examples in the dark area to the right, and you can switch the programming language of the examples with the tabs in the top right.
 
